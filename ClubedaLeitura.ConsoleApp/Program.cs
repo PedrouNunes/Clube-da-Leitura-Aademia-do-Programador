@@ -11,6 +11,88 @@ namespace ClubedaLeitura.ConsoleApp
 
         static void Main(string[] args)
         {
+            static void lerRevista(ref Revista revista)
+            {
+                Console.Write("Digite o nome da revista: ");
+                revista.nomeRevista = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o tipo da coleçaõ: ");
+                revista.tipoColecao = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o numero da edição da revista: ");
+                revista.nEdicao = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine();
+
+                Console.Write("Digite o ano da revista: ");
+                revista.ano = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o numero da caixa revista: ");
+                revista.nCaixa = Convert.ToInt32(Console.ReadLine());
+            }
+            static void lerCaixa(ref Caixa caixa)
+            {
+                Console.Write("Digite a cor da caixa: ");
+                caixa.cor = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o número da caixa: ");
+                caixa.numero = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine();
+
+                Console.Write("Digite a etiqueta da caixa: ");
+                caixa.etiqueta = Console.ReadLine();
+            }
+            static void cadastrarAmigos(ref CadastroAmigo amigo)
+            {
+                Console.Write("Digite o nome do amigo: ");
+                amigo.nomeDoAmigo = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o nome do responsável do amigo: ");
+                amigo.nomeResponsavel = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o telefone do amigo: ");
+                amigo.telefone = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o endereço: ");
+                amigo.endereco = Console.ReadLine();
+            }
+            static void lerEmprestimo(ref Emprestimo emprestimo)
+            {
+                Console.Write("Digite o nome do amigo que está emprestando a revista: ");
+                emprestimo.nomeAmigo = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o nome da revista a ser emprestada: ");
+                emprestimo.nRevista = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite a data de emprestimo: ");
+                emprestimo.dataEmprestimo = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite a data de devolução: ");
+                emprestimo.dataDevolucao = Console.ReadLine();
+            }
+
+
             int resposta;
             bool chamarMenu;
             char continuar;
@@ -52,29 +134,7 @@ namespace ClubedaLeitura.ConsoleApp
                 {
                     case 1:
                         #region Revista
-                        Console.Write("Digite o nome da revista: ");
-                        revista.nomeRevista = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o tipo da coleçaõ: ");
-                        revista.tipoColecao = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o numero da edição da revista: ");
-                        revista.nEdicao = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o ano da revista: ");
-                        revista.ano = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o numero da caixa revista: ");
-                        revista.nCaixa = Convert.ToInt32(Console.ReadLine());
-
+                        lerRevista(ref revista);
                         revista.AdicionarRevistaAoVetor(revistas, revista);
                         Console.WriteLine();
                         #endregion
@@ -82,19 +142,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                     case 2:
                         #region Caixa
-                        Console.Write("Digite a cor da caixa: ");
-                        caixa.cor = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o número da caixa: ");
-                        caixa.numero = Convert.ToInt32(Console.ReadLine());
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite a etiqueta da caixa: ");
-                        caixa.etiqueta = Console.ReadLine();
-
+                        lerCaixa(ref caixa);
                         caixa.guardarCaixaemVetor(caixas, caixa);
                         Console.WriteLine();
 
@@ -105,23 +153,7 @@ namespace ClubedaLeitura.ConsoleApp
                     case 3:
                         #region Cadastro do Amigo
 
-                        Console.Write("Digite o nome do amigo: ");
-                        amigo.nomeDoAmigo = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o nome do responsável do amigo: ");
-                        amigo.nomeResponsavel = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o telefone do amigo: ");
-                        amigo.telefone = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o endereço: ");
-                        amigo.endereco = Console.ReadLine();
+                        cadastrarAmigos(ref amigo);
 
                         amigo.VetorDeAmigos(amigos, amigo);
                         Console.WriteLine();
@@ -132,23 +164,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                     case 4:
                         #region Emprestimo
-                        Console.Write("Digite o nome do amigo que está emprestando a revista: ");
-                        emprestimo.nomeAmigo = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite o nome da revista a ser emprestada: ");
-                        emprestimo.nRevista = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite a data de emprestimo: ");
-                        emprestimo.dataEmprestimo = Console.ReadLine();
-
-                        Console.WriteLine();
-
-                        Console.Write("Digite a data de devolução: ");
-                        emprestimo.dataDevolucao = Console.ReadLine();
+                        lerEmprestimo(ref emprestimo);
 
                         emprestimo.VetorDeEmprestimos(emprestimos, emprestimo);
                         Console.WriteLine();
@@ -183,28 +199,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                             Console.WriteLine();
 
-                            Console.Write("Edite o nome da revista: ");
-                            revista.nomeRevista = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o tipo da coleçaõ: ");
-                            revista.tipoColecao = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o numero da edição da revista: ");
-                            revista.nEdicao = Convert.ToInt32(Console.ReadLine());
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o ano da revista: ");
-                            revista.ano = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o numero da caixa revista: ");
-                            revista.nCaixa = Convert.ToInt32(Console.ReadLine());
+                            lerRevista(ref revista);
 
                             revista.editarRevista(revistas, revista, editar);
                             Console.WriteLine();
@@ -239,18 +234,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                             Console.WriteLine();
 
-                            Console.Write("Edite a cor da caixa: ");
-                            caixa.cor = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o número da caixa: ");
-                            caixa.numero = Convert.ToInt32(Console.ReadLine());
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite a etiqueta da caixa: ");
-                            caixa.etiqueta = Console.ReadLine();
+                            lerCaixa(ref caixa);
 
                             caixa.editarCaixa(caixas, caixa, editar);
                             
@@ -286,23 +270,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                             Console.WriteLine();
 
-                            Console.Write("Edite o nome do amigo: ");
-                            amigo.nomeDoAmigo = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o nome do responsável do amigo: ");
-                            amigo.nomeResponsavel = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o telefone do amigo: ");
-                            amigo.telefone = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o endereço: ");
-                            amigo.endereco = Console.ReadLine();
+                            cadastrarAmigos(ref amigo);
 
                             amigo.editarCadastro(amigos, amigo, editar);
                             Console.WriteLine();
@@ -337,24 +305,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                             Console.WriteLine();
 
-                            Console.Write("Edite o nome do amigo que está emprestando a revista: ");
-                            emprestimo.nomeAmigo = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite o nome da revista a ser emprestada: ");
-                            emprestimo.nRevista = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite a data de emprestimo: ");
-                            emprestimo.dataEmprestimo = Console.ReadLine();
-
-                            Console.WriteLine();
-
-                            Console.Write("Edite a data de devolução: ");
-                            emprestimo.dataDevolucao = Console.ReadLine();
-
+                            lerEmprestimo(ref emprestimo);
                             Console.WriteLine();
 
                             emprestimo.editarEmprestimo(emprestimos, emprestimo, editar);
