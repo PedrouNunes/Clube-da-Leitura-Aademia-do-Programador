@@ -8,9 +8,36 @@
             public string nomeResponsavel;
             public string telefone;
             public string endereco;
-        }
 
+            public void VetorDeAmigos(CadastroAmigo[] amigos, CadastroAmigo amigo)
+            {
+                for (int l = 0; l < amigos.Length; l++)
+                {
+                    if (amigos[l] == null)
+                    {
+                        amigos[l] = amigo;
+                        break;
+                    }
+                }
+            }
+
+            public void exibirAmigos(CadastroAmigo[] amigos, CadastroAmigo amigo)
+            {
+                for (int l = 0; l < amigos.Length; l++)
+                {
+                    if (amigos[l] != null)
+                    {
+                        System.Console.WriteLine("Amigo: " + amigos[l].nomeDoAmigo + ", nome do responsável: " + amigos[l].nomeResponsavel + ".");
+                        System.Console.WriteLine("Endereço: " + amigos[l].endereco + ", telefone: " + amigos[l].telefone + ".");
+                        System.Console.WriteLine();
+                    }
+                }
+
+            }
 
         }
     }
+
+ }
+    
 
