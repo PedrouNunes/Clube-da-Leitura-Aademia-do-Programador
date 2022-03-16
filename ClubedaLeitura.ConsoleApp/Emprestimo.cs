@@ -4,11 +4,17 @@
     {
         public class Emprestimo
         {
-            public string amigoQuePegou;
-            public int nRevistaEmrestada;
+            public string nomeAmigo;
+            public int nRevista;
+            public string dataEmprestimo;
             public string dataDevolucao;
 
+
+
+
         }
+
+
         }
     }
 

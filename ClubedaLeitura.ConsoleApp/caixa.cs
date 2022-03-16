@@ -2,16 +2,14 @@
 {
     internal partial class Program
     {
-        public partial class Revista
+        public class Caixa
         {
-            public class caixa
-            {
-                public string cor;
-                public string etiqueta;
-                public int numero;
-            }
-
+            public string cor;
+            public int numero;
+            public string etiqueta;
         }
+
+
         }
     }
 
