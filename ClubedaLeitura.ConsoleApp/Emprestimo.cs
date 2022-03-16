@@ -21,6 +21,31 @@
                 }
             }
 
+            public void editarEmprestimo(Emprestimo[] emprestimos, Emprestimo emprestimo, int editar)
+            {
+                for (int j = 0; j < emprestimos.Length; j++)
+                {
+                    if (j == editar)
+                    {
+                        emprestimos[j] = emprestimo;
+                        break;
+                    }
+                }
+            }
+
+            public void excluirEmprestimo(Emprestimo[] emprestimos, Emprestimo emprestimo, int excluir)
+            {
+                for (int j = 0; j < amigos.Length; j++)
+                {
+                    if (j == excluir)
+                    {
+                        emprestimos[j] = null;
+                        break;
+                    }
+                }
+            }
+
+
             public void exibirEmprestimos(Emprestimo[] emprestimos, Emprestimo emprestimo)
             {
                 for (int j = 0; j < emprestimos.Length; j++)

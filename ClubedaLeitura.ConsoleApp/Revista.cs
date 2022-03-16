@@ -4,7 +4,6 @@
     {
         public class Revista
         {
-       
             public string tipoColecao;
             public int nEdicao;
             public string ano;
@@ -18,6 +17,30 @@
                     if (revistas[i] == null)
                     {
                         revistas[i] = revista;
+                        break;
+                    }
+                }
+            }
+
+            public void editarRevista(Revista[] revistas, Revista revista, int editar)
+            {
+                for (int i = 0; i < revistas.Length; i++)
+                {
+                    if (i == editar)
+                    {
+                        revistas[i] = revista;
+                        break;
+                    }
+                }
+            }
+
+            public void excluirRevista(Revista[] revistas, Revista revista, int excluir)
+            {
+                for (int i = 0; i < revistas.Length; i++)
+                {
+                    if (i == excluir)
+                    {
+                        revistas[i] = null;
                         break;
                     }
                 }

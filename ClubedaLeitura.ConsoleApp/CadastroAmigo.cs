@@ -21,6 +21,32 @@
                 }
             }
 
+
+            public void editarCadastro(CadastroAmigo[] amigos, CadastroAmigo amigo, int editar)
+            {
+                for (int i = 0; i < amigos.Length; i++)
+                {
+                    if (i == editar)
+                    {
+                        amigos[i] = amigo;
+                        break;
+                    }
+                }
+            }
+
+            public void excluirCadastro(CadastroAmigo[] amigos, CadastroAmigo amigo, int excluir)
+            {
+                for (int i = 0; i < amigos.Length; i++)
+                {
+                    if (i == excluir)
+                    {
+                        amigos[i] = null;
+                        break;
+                    }
+                }
+            }
+
+
             public void exibirAmigos(CadastroAmigo[] amigos, CadastroAmigo amigo)
             {
                 for (int l = 0; l < amigos.Length; l++)
