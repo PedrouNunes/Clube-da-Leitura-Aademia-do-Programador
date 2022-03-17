@@ -4,8 +4,8 @@ namespace ClubedaLeitura.ConsoleApp
 {
     internal partial class Program
     {
-        static Revista[] revistas = new Revista[100000];
-        static Caixa[] caixas = new Caixa[100000];
+       static Revista[] revistas = new Revista[100000];
+       static Caixa[] caixas = new Caixa[100000];
        static CadastroAmigo[] amigos = new CadastroAmigo[100000];
        static Emprestimo[] emprestimos = new Emprestimo[100000];
 
@@ -51,7 +51,7 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.Write("Digite a etiqueta da caixa: ");
                 caixa.etiqueta = Console.ReadLine();
             }
-            static void cadastrarAmigos(ref CadastroAmigo amigo)
+            static void cadastrarAmigos(ref CadastroAmigo amigo, ref char emprestou)
             {
                 Console.Write("Digite o nome do amigo: ");
                 amigo.nomeDoAmigo = Console.ReadLine();
@@ -70,11 +70,35 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.Write("Digite o endereço: ");
                 amigo.endereco = Console.ReadLine();
+
+                Console.WriteLine();
+
+                do
+                {
+                    Console.Write("Esse amigo já fez um emprestimo (S para sim ou N para não)? ");
+                    emprestou = Convert.ToChar(Console.ReadLine());
+                    Console.WriteLine();
+                }while(emprestou != 'S' && emprestou != 'N');
+                
+                if(emprestou == 'S')
+                {
+                    amigo.jaEmprestou = true;
+                }
+                else
+                {
+                    amigo.jaEmprestou = false;
+                }
+
             }
             static void lerEmprestimo(ref Emprestimo emprestimo)
             {
                 Console.Write("Digite o nome do amigo que está emprestando a revista: ");
                 emprestimo.nomeAmigo = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite o id do amigo que está emprestando a revista: ");
+                emprestimo.idAmigo = Convert.ToInt32(Console.ReadLine());
 
                 Console.WriteLine();
 
@@ -95,7 +119,7 @@ namespace ClubedaLeitura.ConsoleApp
 
             int resposta;
             bool chamarMenu;
-            char continuar;
+            char continuar, emprestou = 'N';
             string excluirOuEditar;
             int excluir, editar;
             do
@@ -153,7 +177,7 @@ namespace ClubedaLeitura.ConsoleApp
                     case 3:
                         #region Cadastro do Amigo
 
-                        cadastrarAmigos(ref amigo);
+                        cadastrarAmigos(ref amigo, ref emprestou);
 
                         amigo.VetorDeAmigos(amigos, amigo);
                         Console.WriteLine();
@@ -167,6 +191,8 @@ namespace ClubedaLeitura.ConsoleApp
                         lerEmprestimo(ref emprestimo);
 
                         emprestimo.VetorDeEmprestimos(emprestimos, emprestimo);
+                        emprestimo.naoEmprestarDuasVezes(emprestimos, emprestimo, amigos);
+                    
                         Console.WriteLine();
 
                         #endregion
@@ -270,7 +296,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                             Console.WriteLine();
 
-                            cadastrarAmigos(ref amigo);
+                            cadastrarAmigos(ref amigo, ref emprestou);
 
                             amigo.editarCadastro(amigos, amigo, editar);
                             Console.WriteLine();
