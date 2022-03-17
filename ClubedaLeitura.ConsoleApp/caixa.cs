@@ -1,4 +1,6 @@
-﻿namespace ClubedaLeitura.ConsoleApp
+﻿using System;
+
+namespace ClubedaLeitura.ConsoleApp
 {
     internal partial class Program
     {
@@ -7,7 +9,7 @@
             public string cor;
             public int numero;
             public string etiqueta;
-
+            public Revista[] caixaRevistas = new Revista[10000];   
 
             public void guardarCaixaemVetor(Caixa[] caixas, Caixa caixa)
             {
@@ -16,6 +18,18 @@
                     if (caixas[k] == null)
                     {
                         caixas[k] = caixa;
+                        break;
+                    }
+                }
+            }
+
+            public static void addRevistaNaCaixa(Caixa[] caixas, Revista revista, int id)
+            {
+                for(int k = 0; k < caixas[id].caixaRevistas.Length; k++)
+                {
+                    if (caixas[id].caixaRevistas[k] == null)
+                    {
+                        caixas[id].caixaRevistas[k] = revista;
                         break;
                     }
                 }
@@ -57,7 +71,7 @@
                 }
             }
 
-
+           
         }
 
 

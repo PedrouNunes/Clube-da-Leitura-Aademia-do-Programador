@@ -33,6 +33,16 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.WriteLine();
 
+                Console.WriteLine("Opções de caixa: ");
+                for(int i = 0; i < caixas.Length; i++)
+                {
+                    if (caixas[i] != null)
+                    {
+                        Console.WriteLine(i);
+                    }
+                }
+                Console.WriteLine();
+
                 Console.Write("Digite o numero da caixa revista: ");
                 revista.nCaixa = Convert.ToInt32(Console.ReadLine());
 
@@ -77,12 +87,21 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.WriteLine();
 
             }
-            static void lerEmprestimo(ref Emprestimo emprestimo, Revista[] revistas)
+            static void lerEmprestimo(ref Emprestimo emprestimo, Revista[] revistas, CadastroAmigo[] amigos)
             {
-                // mostrar amigos
-
                 Console.WriteLine();
 
+                Console.WriteLine("Opções de Id de amigo: ");
+
+                for (int i = 0; i < amigos.Length; i++)
+                {
+                    if (amigos[i] != null)
+                    {
+                        Console.WriteLine(i + " - " + amigos[i].nomeDoAmigo);
+                    }
+                }
+
+                Console.WriteLine();
                 Console.Write("Digite o id do amigo que está emprestando a revista: ");
                 emprestimo.idAmigo = Convert.ToInt32(Console.ReadLine());
 
@@ -106,7 +125,7 @@ namespace ClubedaLeitura.ConsoleApp
                 emprestimo.dataDevolucao = Console.ReadLine();
             }
 
-        int resposta;
+        string resposta;
         bool chamarMenu;
         char continuar;
         string excluirOuEditar;
@@ -131,11 +150,10 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.WriteLine("11 - Editar ou excluir um amigo");
                 Console.WriteLine("12 - Editar ou excluir um emprestimo");
 
-
                 Console.Write("Resposta: ");
-                resposta = Convert.ToInt32(Console.ReadLine());
+                resposta = Console.ReadLine();
                 Console.WriteLine();
-            } while (resposta != 1 && resposta != 2 && resposta != 3 && resposta != 4 && resposta != 5 && resposta != 6 && resposta != 7 && resposta != 8 && resposta != 9 && resposta != 10 && resposta != 11 && resposta != 12);
+            } while (resposta != "1" && resposta != "2" && resposta != "3" && resposta != "4" && resposta != "5" && resposta != "6" && resposta != "7" && resposta != "8" && resposta != "9" && resposta != "10" && resposta != "11" && resposta != "12");
             #endregion
 
             Revista revista = new Revista();
@@ -145,25 +163,26 @@ namespace ClubedaLeitura.ConsoleApp
 
             switch (resposta)
             {
-                case 2:
-                    #region Revista
-                    lerRevista(ref revista, caixas);
-                    revista.AdicionarRevistaAoVetor(revistas, revista);
-                    Console.WriteLine();
-                    #endregion
-                    break;
-
-                case 1:
+                case "1":
                     #region Caixa
-                    lerCaixa(ref caixa);
-                    caixa.guardarCaixaemVetor(caixas, caixa);
-                    Console.WriteLine();
+                        lerCaixa(ref caixa);
+                        caixa.guardarCaixaemVetor(caixas, caixa);
+                        Console.WriteLine();
 
-                    #endregion
+                        #endregion
+                 
+                   break;
 
-                    break;
+                case "2":
+                     #region Revista
+                        lerRevista(ref revista, caixas);
+                        revista.AdicionarRevistaAoVetor(revistas, revista);
+                        Console.WriteLine();
+                        #endregion
 
-                case 3:
+                        break;
+
+                case "3":
                     #region Cadastro do Amigo
 
                     cadastrarAmigos(ref amigo);
@@ -175,9 +194,9 @@ namespace ClubedaLeitura.ConsoleApp
 
                     break;
 
-                case 4:
+                case "4":
                     #region Emprestimo
-                    lerEmprestimo(ref emprestimo, revistas);
+                    lerEmprestimo(ref emprestimo, revistas, amigos);
 
                     emprestimo.VetorDeEmprestimos(emprestimos, emprestimo);
                     
@@ -187,23 +206,23 @@ namespace ClubedaLeitura.ConsoleApp
                     #endregion
                     break;
 
-                case 5:
+                case "5":
                     revista.exibir(revistas, revista);
                     break;
 
-                case 6:
+                case "6":
                     caixa.exibirCaixa(caixas, caixa);
                     break;
 
-                case 7:
+                case "7":
                     amigo.exibirAmigos(amigos, amigo);
                     break;
 
-                case 8:
+                case "8":
                     emprestimo.exibirEmprestimos(emprestimos, emprestimo);
                     break;
 
-                case 9:
+                case "9":
                         #region Excluir ou editar Revista
                     do
                     {
@@ -238,7 +257,7 @@ namespace ClubedaLeitura.ConsoleApp
                     #endregion
                     break;
 
-                case 10:
+                case "10":
                         #region Excluir ou editar Caixa
                     do
                     {
@@ -274,7 +293,7 @@ namespace ClubedaLeitura.ConsoleApp
                     #endregion
                     break;
 
-                case 11:
+                case "11":
                         #region Excluir ou editar Amigo
                     do
                     {
@@ -309,7 +328,7 @@ namespace ClubedaLeitura.ConsoleApp
                     #endregion
                     break;
 
-                case 12:
+                case "12":
                         #region Excluir ou editar Emprestimo
                     do
                     {
@@ -325,7 +344,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                         Console.WriteLine();
 
-                        lerEmprestimo(ref emprestimo, revistas);
+                        lerEmprestimo(ref emprestimo, revistas, amigos);
                         Console.WriteLine();
 
                         emprestimo.editarEmprestimo(emprestimos, emprestimo, editar);
