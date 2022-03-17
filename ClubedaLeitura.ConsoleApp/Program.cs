@@ -152,15 +152,15 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.WriteLine("1 - Adicionar caixa");
                 Console.WriteLine("2 - Adicionar revista");
                 Console.WriteLine("3 - Cadastrar amigo");
-                Console.WriteLine("4 - Fazer um emprestimo");
+                Console.WriteLine("4 - Fazer um empréstimo");
                 Console.WriteLine("5 - Exibir as revistas");
                 Console.WriteLine("6 - Exibir as caixas");
                 Console.WriteLine("7 - Exibir os amigos");
-                Console.WriteLine("8 - Exibir os emprestimos");
+                Console.WriteLine("8 - Exibir os empréstimos");
                 Console.WriteLine("9 - Editar ou excluir uma revista");
                 Console.WriteLine("10 - Editar ou excluir uma caixa");
                 Console.WriteLine("11 - Editar ou excluir um amigo");
-                Console.WriteLine("12 - Editar ou excluir um emprestimo");
+                Console.WriteLine("12 - Editar ou excluir um empréstimo");
 
                 Console.Write("Resposta: ");
                 resposta = Console.ReadLine();
