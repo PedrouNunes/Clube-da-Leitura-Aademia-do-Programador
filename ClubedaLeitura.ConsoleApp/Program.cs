@@ -107,9 +107,21 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.WriteLine();
 
+                Console.WriteLine("Opções de ID de revista: ");
+                for(int i = 0;i < revistas.Length; i++)
+                {
+                    if(revistas[i] != null)
+                    {
+                        Console.WriteLine(i + " - " + revistas[i].nomeRevista);
+                    }
+                }
+
+                Console.WriteLine();
+
                 do {
                     Console.Write("Digite o id da revista a ser emprestada: ");
                     emprestimo.nRevista = Convert.ToInt32(Console.ReadLine());
+                    Console.WriteLine();
                 }while(revistas[emprestimo.nRevista].disponivel == false);
 
                 Revista.indisponibilizarRevista(emprestimo.nRevista, revistas);
