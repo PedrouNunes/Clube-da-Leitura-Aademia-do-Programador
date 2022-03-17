@@ -33,7 +33,6 @@
                 revistas[id].disponivel = true;
             }
 
-
             public void editarRevista(Revista[] revistas, Revista revista, int editar)
             {
                 for (int i = 0; i < revistas.Length; i++)

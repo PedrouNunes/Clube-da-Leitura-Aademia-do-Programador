@@ -8,7 +8,6 @@
         public string nomeResponsavel;
         public string telefone;
         public string endereco;
-        public bool jaEmprestou;
 
         public void VetorDeAmigos(CadastroAmigo[] amigos, CadastroAmigo amigo)
         {
