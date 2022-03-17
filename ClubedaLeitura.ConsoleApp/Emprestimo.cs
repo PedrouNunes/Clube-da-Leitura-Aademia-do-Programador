@@ -39,12 +39,12 @@
 
         public void excluirEmprestimo(Emprestimo[] emprestimos, Emprestimo emprestimo, int excluir)
         {
-            for (int j = 0; j < amigos.Length; j++)
+            for (int j = 0; j < emprestimos.Length; j++)
             {
                 if (j == excluir)
                 {
                     emprestimos[j] = null;
-                    break;
+                        break;
                 }
             }
         }

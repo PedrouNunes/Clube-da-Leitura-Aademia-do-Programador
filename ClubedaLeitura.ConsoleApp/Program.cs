@@ -203,13 +203,14 @@ namespace ClubedaLeitura.ConsoleApp
                     break;
 
                 case 9:
+                        #region Excluir ou editar Revista
                     do
                     {
                         Console.Write("Digite E para editar ou EX para excluir: ");
                         excluirOuEditar = Console.ReadLine();
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-                    #region Excluir ou editar Revista
+                
                     if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição da revista que deseja editar: ");
@@ -237,14 +238,14 @@ namespace ClubedaLeitura.ConsoleApp
                     break;
 
                 case 10:
+                        #region Excluir ou editar Caixa
                     do
                     {
                         Console.Write("Digite E para editar ou EX para excluir: ");
                         excluirOuEditar = Console.ReadLine();
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-
-                    #region Excluir ou editar Caixa
+           
                     if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição da caixa que deseja editar: ");
@@ -273,6 +274,7 @@ namespace ClubedaLeitura.ConsoleApp
                     break;
 
                 case 11:
+                        #region Excluir ou editar Amigo
                     do
                     {
                         Console.Write("Digite E para editar ou EX para excluir: ");
@@ -280,7 +282,6 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
 
-                    #region Excluir ou editar Amigo
                     if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição do cadastro do amigo que deseja editar: ");
@@ -308,6 +309,7 @@ namespace ClubedaLeitura.ConsoleApp
                     break;
 
                 case 12:
+                        #region Excluir ou editar Emprestimo
                     do
                     {
                         Console.Write("Digite E para editar ou EX para excluir: ");
@@ -315,7 +317,6 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
 
-                    #region Excluir ou editar Emprestimo
                     if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição do emprestimo que deseja editar: ");
@@ -337,6 +338,7 @@ namespace ClubedaLeitura.ConsoleApp
                             Console.Write("Digite a posição do emprestimo que deseja excluir: ");
                             excluir = Convert.ToInt32(Console.ReadLine());
 
+                            Revista.disponibilizarRevista(emprestimo.nRevista, revistas);
                             emprestimo.excluirEmprestimo(emprestimos, emprestimo, excluir);
                             Console.WriteLine();
                         }
@@ -345,14 +347,16 @@ namespace ClubedaLeitura.ConsoleApp
                     break;
             }
 
-            do
-            {
+                #region Chamar menu novamente
+                do
+                {
                 Console.Write("Deseja chamar o menu novamente? Digite S para sim e N para não: ");
                 continuar = Convert.ToChar(Console.ReadLine());
                 Console.WriteLine();
             } while (continuar != 'S' && continuar != 'N');
 
             chamarMenu = continuar == 'S';
+                #endregion
             } while (chamarMenu == true);
         }
     }
