@@ -11,7 +11,7 @@ namespace ClubedaLeitura.ConsoleApp
 
         static void Main(string[] args)
         {
-            static void lerRevista(ref Revista revista)
+            static void lerRevista(ref Revista revista, Caixa[] caixas)
             {
                 Console.Write("Digite o nome da revista: ");
                 revista.nomeRevista = Console.ReadLine();
@@ -36,6 +36,7 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.Write("Digite o numero da caixa revista: ");
                 revista.nCaixa = Convert.ToInt32(Console.ReadLine());
 
+                Caixa.addRevistaNaCaixa(caixas, revista, revista.nCaixa);
                 revista.disponivel = true;
             }
             static void lerCaixa(ref Caixa caixa)
@@ -117,8 +118,8 @@ namespace ClubedaLeitura.ConsoleApp
             {
                 Console.WriteLine();
                 Console.WriteLine("Digite a resposta de acordo com o cmomando que deseja executar!");
-                Console.WriteLine("1 - Adicionar revista");
-                Console.WriteLine("2 - Adicionar caixa");
+                Console.WriteLine("1 - Adicionar caixa");
+                Console.WriteLine("2 - Adicionar revista");
                 Console.WriteLine("3 - Cadastrar amigo");
                 Console.WriteLine("4 - Fazer um emprestimo");
                 Console.WriteLine("5 - Exibir as revistas");
@@ -144,15 +145,15 @@ namespace ClubedaLeitura.ConsoleApp
 
             switch (resposta)
             {
-                case 1:
+                case 2:
                     #region Revista
-                    lerRevista(ref revista);
+                    lerRevista(ref revista, caixas);
                     revista.AdicionarRevistaAoVetor(revistas, revista);
                     Console.WriteLine();
                     #endregion
                     break;
 
-                case 2:
+                case 1:
                     #region Caixa
                     lerCaixa(ref caixa);
                     caixa.guardarCaixaemVetor(caixas, caixa);
@@ -218,7 +219,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                         Console.WriteLine();
 
-                        lerRevista(ref revista);
+                        lerRevista(ref revista, caixas);
 
                         revista.editarRevista(revistas, revista, editar);
                         Console.WriteLine();
