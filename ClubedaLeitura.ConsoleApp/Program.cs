@@ -53,7 +53,7 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.Write("Digite a etiqueta da caixa: ");
                 caixa.etiqueta = Console.ReadLine();
             }
-            static void cadastrarAmigos(ref CadastroAmigo amigo, ref char emprestou)
+            static void cadastrarAmigos(ref CadastroAmigo amigo)
             {
                 Console.Write("Digite o nome do amigo: ");
                 amigo.nomeDoAmigo = Console.ReadLine();
@@ -107,7 +107,7 @@ namespace ClubedaLeitura.ConsoleApp
 
         int resposta;
         bool chamarMenu;
-        char continuar, emprestou = 'N';
+        char continuar;
         string excluirOuEditar;
         int excluir, editar;
         do
@@ -165,7 +165,7 @@ namespace ClubedaLeitura.ConsoleApp
                 case 3:
                     #region Cadastro do Amigo
 
-                    cadastrarAmigos(ref amigo, ref emprestou);
+                    cadastrarAmigos(ref amigo);
 
                     amigo.VetorDeAmigos(amigos, amigo);
                     Console.WriteLine();
@@ -288,7 +288,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                         Console.WriteLine();
 
-                        cadastrarAmigos(ref amigo, ref emprestou);
+                        cadastrarAmigos(ref amigo);
 
                         amigo.editarCadastro(amigos, amigo, editar);
                         Console.WriteLine();
