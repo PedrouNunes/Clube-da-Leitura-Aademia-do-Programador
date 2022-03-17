@@ -35,6 +35,8 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.Write("Digite o numero da caixa revista: ");
                 revista.nCaixa = Convert.ToInt32(Console.ReadLine());
+
+                revista.disponivel = true;
             }
             static void lerCaixa(ref Caixa caixa)
             {
@@ -73,27 +75,10 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.WriteLine();
 
-                do
-                {
-                    Console.Write("Esse amigo já fez um emprestimo (S para sim ou N para não)? ");
-                    emprestou = Convert.ToChar(Console.ReadLine());
-                    Console.WriteLine();
-                }while(emprestou != 'S' && emprestou != 'N');
-                
-                if(emprestou == 'S')
-                {
-                    amigo.jaEmprestou = true;
-                }
-                else
-                {
-                    amigo.jaEmprestou = false;
-                }
-
             }
-            static void lerEmprestimo(ref Emprestimo emprestimo)
+            static void lerEmprestimo(ref Emprestimo emprestimo, Revista[] revistas)
             {
-                Console.Write("Digite o nome do amigo que está emprestando a revista: ");
-                emprestimo.nomeAmigo = Console.ReadLine();
+                // mostrar amigos
 
                 Console.WriteLine();
 
@@ -102,8 +87,12 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.WriteLine();
 
-                Console.Write("Digite o nome da revista a ser emprestada: ");
-                emprestimo.nRevista = Console.ReadLine();
+                do {
+                    Console.Write("Digite o id da revista a ser emprestada: ");
+                    emprestimo.nRevista = Convert.ToInt32(Console.ReadLine());
+                }while(revistas[emprestimo.nRevista].disponivel == false);
+
+                Revista.indisponibilizarRevista(emprestimo.nRevista, revistas);
 
                 Console.WriteLine();
 
@@ -116,252 +105,255 @@ namespace ClubedaLeitura.ConsoleApp
                 emprestimo.dataDevolucao = Console.ReadLine();
             }
 
-
-            int resposta;
-            bool chamarMenu;
-            char continuar, emprestou = 'N';
-            string excluirOuEditar;
-            int excluir, editar;
+        int resposta;
+        bool chamarMenu;
+        char continuar, emprestou = 'N';
+        string excluirOuEditar;
+        int excluir, editar;
+        do
+        {
+            #region menu
             do
             {
-                #region menu
-                do
-                {
+                Console.WriteLine();
+                Console.WriteLine("Digite a resposta de acordo com o cmomando que deseja executar!");
+                Console.WriteLine("1 - Adicionar revista");
+                Console.WriteLine("2 - Adicionar caixa");
+                Console.WriteLine("3 - Cadastrar amigo");
+                Console.WriteLine("4 - Fazer um emprestimo");
+                Console.WriteLine("5 - Exibir as revistas");
+                Console.WriteLine("6 - Exibir as caixas");
+                Console.WriteLine("7 - Exibir os amigos");
+                Console.WriteLine("8 - Exibir os emprestimos");
+                Console.WriteLine("9 - Editar ou excluir uma revista");
+                Console.WriteLine("10 - Editar ou excluir uma caixa");
+                Console.WriteLine("11 - Editar ou excluir um amigo");
+                Console.WriteLine("12 - Editar ou excluir um emprestimo");
+
+
+                Console.Write("Resposta: ");
+                resposta = Convert.ToInt32(Console.ReadLine());
+                Console.WriteLine();
+            } while (resposta != 1 && resposta != 2 && resposta != 3 && resposta != 4 && resposta != 5 && resposta != 6 && resposta != 7 && resposta != 8 && resposta != 9 && resposta != 10 && resposta != 11 && resposta != 12);
+            #endregion
+
+            Revista revista = new Revista();
+            Caixa caixa = new Caixa();
+            CadastroAmigo amigo = new CadastroAmigo();
+            Emprestimo emprestimo = new Emprestimo();
+
+            switch (resposta)
+            {
+                case 1:
+                    #region Revista
+                    lerRevista(ref revista);
+                    revista.AdicionarRevistaAoVetor(revistas, revista);
                     Console.WriteLine();
-                    Console.WriteLine("Digite a resposta de acordo com o cmomando que deseja executar!");
-                    Console.WriteLine("1 - Adicionar revista");
-                    Console.WriteLine("2 - Adicionar caixa");
-                    Console.WriteLine("3 - Cadastrar amigo");
-                    Console.WriteLine("4 - Fazer um emprestimo");
-                    Console.WriteLine("5 - Exibir as revistas");
-                    Console.WriteLine("6 - Exibir as caixas");
-                    Console.WriteLine("7 - Exibir os amigos");
-                    Console.WriteLine("8 - Exibir os emprestimos");
-                    Console.WriteLine("9 - Editar ou excluir uma revista");
-                    Console.WriteLine("10 - Editar ou excluir uma caixa");
-                    Console.WriteLine("11 - Editar ou excluir um amigo");
-                    Console.WriteLine("12 - Editar ou excluir um emprestimo");
+                    #endregion
+                    break;
 
-
-                    Console.Write("Resposta: ");
-                    resposta = Convert.ToInt32(Console.ReadLine());
+                case 2:
+                    #region Caixa
+                    lerCaixa(ref caixa);
+                    caixa.guardarCaixaemVetor(caixas, caixa);
                     Console.WriteLine();
-                } while (resposta != 1 && resposta != 2 && resposta != 3 && resposta != 4 && resposta != 5 && resposta != 6 && resposta != 7 && resposta != 8 && resposta != 9 && resposta != 10 && resposta != 11 && resposta != 12);
-                #endregion
 
-                Revista revista = new Revista();
-                Caixa caixa = new Caixa();
-                CadastroAmigo amigo = new CadastroAmigo();
-                Emprestimo emprestimo = new Emprestimo();
+                    #endregion
 
-                switch (resposta)
-                {
-                    case 1:
-                        #region Revista
+                    break;
+
+                case 3:
+                    #region Cadastro do Amigo
+
+                    cadastrarAmigos(ref amigo, ref emprestou);
+
+                    amigo.VetorDeAmigos(amigos, amigo);
+                    Console.WriteLine();
+
+                    #endregion
+
+                    break;
+
+                case 4:
+                    #region Emprestimo
+                    lerEmprestimo(ref emprestimo, revistas);
+
+                    emprestimo.VetorDeEmprestimos(emprestimos, emprestimo);
+                    
+
+                    Console.WriteLine();
+
+                    #endregion
+                    break;
+
+                case 5:
+                    revista.exibir(revistas, revista);
+                    break;
+
+                case 6:
+                    caixa.exibirCaixa(caixas, caixa);
+                    break;
+
+                case 7:
+                    amigo.exibirAmigos(amigos, amigo);
+                    break;
+
+                case 8:
+                    emprestimo.exibirEmprestimos(emprestimos, emprestimo);
+                    break;
+
+                case 9:
+                    do
+                    {
+                        Console.Write("Digite E para editar ou EX para excluir: ");
+                        excluirOuEditar = Console.ReadLine();
+                        Console.WriteLine();
+                    } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
+                    #region Excluir ou editar Revista
+                    if (excluirOuEditar == "E")
+                    {
+                        Console.Write("Digite a posição da revista que deseja editar: ");
+                        editar = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine();
+
                         lerRevista(ref revista);
-                        revista.AdicionarRevistaAoVetor(revistas, revista);
-                        Console.WriteLine();
-                        #endregion
-                        break;
 
-                    case 2:
-                        #region Caixa
+                        revista.editarRevista(revistas, revista, editar);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        if (excluirOuEditar == "EX")
+                        {
+                            Console.Write("Digite a posição da revista que deseja excluir: ");
+                            excluir = Convert.ToInt32(Console.ReadLine());
+
+                            revista.excluirRevista(revistas, revista, excluir);
+                            Console.WriteLine();
+                        }
+                    }
+                    #endregion
+                    break;
+
+                case 10:
+                    do
+                    {
+                        Console.Write("Digite E para editar ou EX para excluir: ");
+                        excluirOuEditar = Console.ReadLine();
+                        Console.WriteLine();
+                    } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
+
+                    #region Excluir ou editar Caixa
+                    if (excluirOuEditar == "E")
+                    {
+                        Console.Write("Digite a posição da caixa que deseja editar: ");
+                        editar = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine();
+
                         lerCaixa(ref caixa);
-                        caixa.guardarCaixaemVetor(caixas, caixa);
+
+                        caixa.editarCaixa(caixas, caixa, editar);
+
                         Console.WriteLine();
+                    }
+                    else
+                    {
+                        if (excluirOuEditar == "EX")
+                        {
+                            Console.Write("Digite a posição da caixa que deseja excluir: ");
+                            excluir = Convert.ToInt32(Console.ReadLine());
 
-                        #endregion
+                            caixa.excluirCaixa(caixas, caixa, excluir);
+                            Console.WriteLine();
+                        }
+                    }
+                    #endregion
+                    break;
 
-                        break;
+                case 11:
+                    do
+                    {
+                        Console.Write("Digite E para editar ou EX para excluir: ");
+                        excluirOuEditar = Console.ReadLine();
+                        Console.WriteLine();
+                    } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
 
-                    case 3:
-                        #region Cadastro do Amigo
+                    #region Excluir ou editar Amigo
+                    if (excluirOuEditar == "E")
+                    {
+                        Console.Write("Digite a posição do cadastro do amigo que deseja editar: ");
+                        editar = Convert.ToInt32(Console.ReadLine());
+
+                        Console.WriteLine();
 
                         cadastrarAmigos(ref amigo, ref emprestou);
 
-                        amigo.VetorDeAmigos(amigos, amigo);
+                        amigo.editarCadastro(amigos, amigo, editar);
+                        Console.WriteLine();
+                    }
+                    else
+                    {
+                        if (excluirOuEditar == "EX")
+                        {
+                            Console.Write("Digite a posição do cadastro do amigo que deseja excluir: ");
+                            excluir = Convert.ToInt32(Console.ReadLine());
+
+                            amigo.excluirCadastro(amigos, amigo, excluir);
+                            Console.WriteLine();
+                        }
+                    }
+                    #endregion
+                    break;
+
+                case 12:
+                    do
+                    {
+                        Console.Write("Digite E para editar ou EX para excluir: ");
+                        excluirOuEditar = Console.ReadLine();
+                        Console.WriteLine();
+                    } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
+
+                    #region Excluir ou editar Emprestimo
+                    if (excluirOuEditar == "E")
+                    {
+                        Console.Write("Digite a posição do emprestimo que deseja editar: ");
+                        editar = Convert.ToInt32(Console.ReadLine());
+
                         Console.WriteLine();
 
-                        #endregion
-
-                        break;
-
-                    case 4:
-                        #region Emprestimo
-                        lerEmprestimo(ref emprestimo);
-
-                        emprestimo.VetorDeEmprestimos(emprestimos, emprestimo);
-                        emprestimo.naoEmprestarDuasVezes(emprestimos, emprestimo, amigos);
-                    
+                        lerEmprestimo(ref emprestimo, revistas);
                         Console.WriteLine();
 
-                        #endregion
-                        break;
+                        emprestimo.editarEmprestimo(emprestimos, emprestimo, editar);
+                        Console.WriteLine();
 
-                    case 5: revista.exibir(revistas, revista);
-                        break;
-
-                    case 6: caixa.exibirCaixa(caixas, caixa);
-                        break;
-
-                    case 7: amigo.exibirAmigos(amigos, amigo);
-                        break;
-
-                    case 8: emprestimo.exibirEmprestimos(emprestimos, emprestimo);
-                        break;
-
-                    case 9:
-                        do
+                    }
+                    else
+                    {
+                        if (excluirOuEditar == "EX")
                         {
-                            Console.Write("Digite E para editar ou EX para excluir: ");
-                            excluirOuEditar = Console.ReadLine();
-                            Console.WriteLine();
-                        } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-                        #region Excluir ou editar Revista
-                        if (excluirOuEditar == "E")
-                        {
-                            Console.Write("Digite a posição da revista que deseja editar: ");
-                            editar = Convert.ToInt32(Console.ReadLine());
+                            Console.Write("Digite a posição do emprestimo que deseja excluir: ");
+                            excluir = Convert.ToInt32(Console.ReadLine());
 
-                            Console.WriteLine();
-
-                            lerRevista(ref revista);
-
-                            revista.editarRevista(revistas, revista, editar);
+                            emprestimo.excluirEmprestimo(emprestimos, emprestimo, excluir);
                             Console.WriteLine();
                         }
-                        else
-                        {
-                            if (excluirOuEditar == "EX")
-                            {
-                                Console.Write("Digite a posição da revista que deseja excluir: ");
-                                excluir = Convert.ToInt32(Console.ReadLine());
+                    }
+                    #endregion
+                    break;
+            }
 
-                                revista.excluirRevista(revistas, revista, excluir);
-                                Console.WriteLine();
-                            }
-                        }
-                        #endregion
-                        break;
+            do
+            {
+                Console.Write("Deseja chamar o menu novamente? Digite S para sim e N para não: ");
+                continuar = Convert.ToChar(Console.ReadLine());
+                Console.WriteLine();
+            } while (continuar != 'S' && continuar != 'N');
 
-                    case 10:
-                        do
-                        {
-                            Console.Write("Digite E para editar ou EX para excluir: ");
-                            excluirOuEditar = Console.ReadLine();
-                            Console.WriteLine();
-                        } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-
-                        #region Excluir ou editar Caixa
-                        if (excluirOuEditar == "E")
-                        {
-                            Console.Write("Digite a posição da caixa que deseja editar: ");
-                            editar = Convert.ToInt32(Console.ReadLine());
-
-                            Console.WriteLine();
-
-                            lerCaixa(ref caixa);
-
-                            caixa.editarCaixa(caixas, caixa, editar);
-                            
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            if (excluirOuEditar == "EX")
-                            {
-                                Console.Write("Digite a posição da caixa que deseja excluir: ");
-                                excluir = Convert.ToInt32(Console.ReadLine());
-
-                                caixa.excluirCaixa(caixas, caixa, excluir);
-                                Console.WriteLine();
-                            }
-                        }
-                        #endregion
-                        break;
-
-                    case 11:
-                        do
-                        {
-                            Console.Write("Digite E para editar ou EX para excluir: ");
-                            excluirOuEditar = Console.ReadLine();
-                            Console.WriteLine();
-                        } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-
-                        #region Excluir ou editar Amigo
-                        if (excluirOuEditar == "E")
-                        {
-                            Console.Write("Digite a posição do cadastro do amigo que deseja editar: ");
-                            editar = Convert.ToInt32(Console.ReadLine());
-
-                            Console.WriteLine();
-
-                            cadastrarAmigos(ref amigo, ref emprestou);
-
-                            amigo.editarCadastro(amigos, amigo, editar);
-                            Console.WriteLine();
-                        }
-                        else
-                        {
-                            if (excluirOuEditar == "EX")
-                            {
-                                Console.Write("Digite a posição do cadastro do amigo que deseja excluir: ");
-                                excluir = Convert.ToInt32(Console.ReadLine());
-
-                                amigo.excluirCadastro(amigos, amigo, excluir);
-                                Console.WriteLine();
-                            }
-                        }
-                        #endregion
-                        break;
-
-                        case 12:
-                        do
-                        {
-                            Console.Write("Digite E para editar ou EX para excluir: ");
-                            excluirOuEditar = Console.ReadLine();
-                            Console.WriteLine();
-                        } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-
-                        #region Excluir ou editar Emprestimo
-                        if (excluirOuEditar == "E")
-                        {
-                            Console.Write("Digite a posição do emprestimo que deseja editar: ");
-                            editar = Convert.ToInt32(Console.ReadLine());
-
-                            Console.WriteLine();
-
-                            lerEmprestimo(ref emprestimo);
-                            Console.WriteLine();
-
-                            emprestimo.editarEmprestimo(emprestimos, emprestimo, editar);
-                            Console.WriteLine();
-
-                        }
-                        else
-                        {
-                            if (excluirOuEditar == "EX")
-                            {
-                                Console.Write("Digite a posição do emprestimo que deseja excluir: ");
-                                excluir = Convert.ToInt32(Console.ReadLine());
-
-                                emprestimo.excluirEmprestimo(emprestimos, emprestimo, excluir);
-                                Console.WriteLine();
-                            }
-                        }
-                        #endregion
-                        break;
-                }
-
-                do
-                {
-                    Console.Write("Deseja chamar o menu novamente? Digite S para sim e N para não: ");
-                    continuar = Convert.ToChar(Console.ReadLine());
-                    Console.WriteLine();
-                } while (continuar != 'S' && continuar != 'N');
-
-                chamarMenu = continuar == 'S';
-            }while(chamarMenu == true);
+            chamarMenu = continuar == 'S';
+            } while (chamarMenu == true);
         }
     }
 }

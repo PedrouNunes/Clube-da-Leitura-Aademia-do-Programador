@@ -9,6 +9,7 @@
             public string ano;
             public int nCaixa;
             public string nomeRevista;
+            public bool disponivel;
 
             public void AdicionarRevistaAoVetor(Revista[] revistas, Revista revista)
             {
@@ -20,6 +21,11 @@
                         break;
                     }
                 }
+            }
+
+            public static void indisponibilizarRevista(int id, Revista[] revistas)
+            {
+                revistas[id].disponivel = false;
             }
 
             public void editarRevista(Revista[] revistas, Revista revista, int editar)
