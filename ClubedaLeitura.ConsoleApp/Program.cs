@@ -8,10 +8,17 @@ namespace ClubedaLeitura.ConsoleApp
        static Caixa[] caixas = new Caixa[100000];
        static CadastroAmigo[] amigos = new CadastroAmigo[100000];
        static Emprestimo[] emprestimos = new Emprestimo[100000];
+       static Categoria[] categorias = new Categoria[100000];
 
         static void Main(string[] args)
         {
-            static void lerRevista(ref Revista revista, Caixa[] caixas)
+            static void comprovarAcao(string mensagem, ConsoleColor cor)
+            {
+                Console.ForegroundColor = cor;
+                Console.WriteLine(mensagem);
+                Console.ResetColor();
+            }
+            static void lerRevista(ref Revista revista, Caixa[] caixas, Categoria[] categorias)
             {
                 Console.Write("Digite o nome da revista: ");
                 revista.nomeRevista = Console.ReadLine();
@@ -45,6 +52,13 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.Write("Digite o ID da caixa da revista: ");
                 revista.nCaixa = Convert.ToInt32(Console.ReadLine());
+
+                Console.WriteLine();
+
+                Console.Write("Digite o ID da categoria da revista: ");
+                revista.nCategoria = Convert.ToInt32(Console.ReadLine());
+
+                Categoria.addRevistaNaCategoria(categorias, revista, revista.nCategoria);
 
                 Caixa.addRevistaNaCaixa(caixas, revista, revista.nCaixa);
                 revista.disponivel = true;
@@ -142,14 +156,20 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.WriteLine();
             }
-            static void comprovarAcao(string mensagem, ConsoleColor cor)
+            static void lerCategoria(ref Categoria categoria)
             {
-                Console.ForegroundColor = cor;
-                Console.WriteLine(mensagem);
-                Console.ResetColor();
+                Console.Write("Digite o nome da categoria: ");
+                categoria.nomeCategoria = Console.ReadLine();
+
+                Console.WriteLine();
+
+                Console.Write("Digite a quantidade de dias do empréstimo: ");
+                categoria.qntDiasEmprestimos = Convert.ToInt32(Console.Read());
+
+                Console.WriteLine();
             }
 
-            string resposta;
+        string resposta;
         bool chamarMenu;
         char continuar;
         string excluirOuEditar;
@@ -161,6 +181,7 @@ namespace ClubedaLeitura.ConsoleApp
             {
                 Console.WriteLine();
                 Console.WriteLine("Digite a resposta de acordo com o cmomando que deseja executar!");
+                Console.WriteLine("0 - Adicionar Categoria");
                 Console.WriteLine("1 - Adicionar caixa");
                 Console.WriteLine("2 - Adicionar revista");
                 Console.WriteLine("3 - Cadastrar amigo");
@@ -177,17 +198,28 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.Write("Resposta: ");
                 resposta = Console.ReadLine();
                 Console.WriteLine();
-            } while (resposta != "1" && resposta != "2" && resposta != "3" && resposta != "4" && resposta != "5" && resposta != "6" && resposta != "7" && resposta != "8" && resposta != "9" && resposta != "10" && resposta != "11" && resposta != "12");
-            #endregion
+            } while (resposta != "0" && resposta != "1" && resposta != "2" && resposta != "3" && resposta != "4" && resposta != "5" && resposta != "6" && resposta != "7" && resposta != "8" && resposta != "9" && resposta != "10" && resposta != "11" && resposta != "12" && resposta != "13");
+                #endregion
 
-            Revista revista = new Revista();
+                #region Declaração de Objetos
+                Revista revista = new Revista();
             Caixa caixa = new Caixa();
             CadastroAmigo amigo = new CadastroAmigo();
             Emprestimo emprestimo = new Emprestimo();
+            Categoria categoria = new Categoria();
+                #endregion
 
-            switch (resposta)
+                switch (resposta)
             {
-                case "1":
+                case "0":
+                        #region Categoria
+                        lerCategoria(ref categoria);
+                        categoria.CategoriaVetor(categorias, categoria);
+
+                        break;
+                        #endregion
+
+                    case "1":
                     #region Caixa
                         lerCaixa(ref caixa);
                         caixa.guardarCaixaemVetor(caixas, caixa);
@@ -198,7 +230,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                     case "2":
                      #region Revista
-                        lerRevista(ref revista, caixas);
+                        lerRevista(ref revista, caixas, categorias);
                         revista.AdicionarRevistaAoVetor(revistas, revista);
                         comprovarAcao("Revista adicionada! ", ConsoleColor.Green);
                         Console.WriteLine();                  
@@ -263,12 +295,12 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
                         if (excluirOuEditar == "E")
                     {
-                        Console.Write("Digite a posição da revista que deseja editar: ");
+                        Console.Write("Digite o ID da revista que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine();
 
-                        lerRevista(ref revista, caixas);
+                        lerRevista(ref revista, caixas, categorias);
 
                         revista.editarRevista(revistas, revista, editar);
                         comprovarAcao("Revista editada! ", ConsoleColor.Blue);
@@ -278,7 +310,7 @@ namespace ClubedaLeitura.ConsoleApp
                     {
                         if (excluirOuEditar == "EX")
                         {
-                            Console.Write("Digite a posição da revista que deseja excluir: ");
+                            Console.Write("Digite o ID da revista que deseja excluir: ");
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             revista.excluirRevista(revistas, revista, excluir);
@@ -310,7 +342,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                         if (excluirOuEditar == "E")
                     {
-                        Console.Write("Digite a posição da caixa que deseja editar: ");
+                        Console.Write("Digite o ID da caixa que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine();
@@ -326,7 +358,7 @@ namespace ClubedaLeitura.ConsoleApp
                     {
                         if (excluirOuEditar == "EX")
                         {
-                            Console.Write("Digite a posição da caixa que deseja excluir: ");
+                            Console.Write("Digite o ID da caixa que deseja excluir: ");
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             caixa.excluirCaixa(caixas, caixa, excluir);
@@ -360,7 +392,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                         if (excluirOuEditar == "E")
                     {
-                        Console.Write("Digite a posição do cadastro do amigo que deseja editar: ");
+                        Console.Write("Digite o ID do cadastro do amigo que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine();
@@ -375,7 +407,7 @@ namespace ClubedaLeitura.ConsoleApp
                     {
                         if (excluirOuEditar == "EX")
                         {
-                            Console.Write("Digite a posição do cadastro do amigo que deseja excluir: ");
+                            Console.Write("Digite o ID do cadastro do amigo que deseja excluir: ");
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             amigo.excluirCadastro(amigos, amigo, excluir);
@@ -408,7 +440,7 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
                     if (excluirOuEditar == "E")
                     {
-                        Console.Write("Digite a posição do emprestimo que deseja editar: ");
+                        Console.Write("Digite o ID do emprestimo que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
 
                         Console.WriteLine();
@@ -425,7 +457,7 @@ namespace ClubedaLeitura.ConsoleApp
                     {
                         if (excluirOuEditar == "EX")
                         {
-                            Console.Write("Digite a posição do emprestimo que deseja excluir: ");
+                            Console.Write("Digite o ID do emprestimo que deseja excluir: ");
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             Revista.disponibilizarRevista(emprestimo.nRevista, revistas);
@@ -436,7 +468,57 @@ namespace ClubedaLeitura.ConsoleApp
                     }
                     #endregion
                     break;
-            }
+
+                case "13":
+                        #region Excluir ou editar categoria
+                        do
+                        {
+                            Console.Write("Digite E para editar ou EX para excluir: ");
+                            excluirOuEditar = Console.ReadLine();
+                            Console.WriteLine();
+                        } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
+
+                        Console.WriteLine("Opções de ID de categoria: ");
+
+                        for (int i = 0; i > categorias.Length; i++)
+                        {
+                            if (categorias[i] != null)
+                            {
+                                Console.WriteLine(i + " - " + categorias[i].nomeCategoria);
+                            }
+                        }
+                        
+                        if (excluirOuEditar == "E")
+                        {
+                            Console.Write("Digite o ID da categoria que deseja editar: ");
+                            editar = Convert.ToInt32(Console.ReadLine());
+
+                            Console.WriteLine();
+
+                            lerCategoria(ref categoria);
+                            Console.WriteLine();
+
+                            categoria.editarCategoria(categorias, categoria, editar);
+                            comprovarAcao("Categoria editada! ", ConsoleColor.Blue);
+                            Console.WriteLine();
+                        }
+                        else
+                        {
+                            if (excluirOuEditar == "EX")
+                            {
+                                Console.Write("Digite o ID da Categoria que deseja excluir: ");
+                                excluir = Convert.ToInt32(Console.ReadLine());
+
+                                Revista.disponibilizarRevista(emprestimo.nRevista, revistas);
+                                categoria.excluirCategoria(categorias, excluir);
+                                comprovarAcao("Categoria excluida! ", ConsoleColor.Red);
+                                Console.WriteLine();
+                            }
+                        }
+                 
+                        break;
+                        #endregion
+                }
 
                 #region Chamar menu novamente
                 do

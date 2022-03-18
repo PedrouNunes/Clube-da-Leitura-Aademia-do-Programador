@@ -10,6 +10,8 @@
             public int nCaixa;
             public string nomeRevista;
             public bool disponivel;
+            public int nCategoria;
+            
 
             public void AdicionarRevistaAoVetor(Revista[] revistas, Revista revista)
             {
