@@ -43,11 +43,13 @@ namespace ClubedaLeitura.ConsoleApp
                 }
                 Console.WriteLine();
 
-                Console.Write("Digite o numero da caixa revista: ");
+                Console.Write("Digite o ID da caixa da revista: ");
                 revista.nCaixa = Convert.ToInt32(Console.ReadLine());
 
                 Caixa.addRevistaNaCaixa(caixas, revista, revista.nCaixa);
                 revista.disponivel = true;
+
+                Console.WriteLine();
             }
             static void lerCaixa(ref Caixa caixa)
             {
@@ -63,6 +65,8 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.Write("Digite a etiqueta da caixa: ");
                 caixa.etiqueta = Console.ReadLine();
+
+                Console.WriteLine();
             }
             static void cadastrarAmigos(ref CadastroAmigo amigo)
             {
@@ -119,7 +123,7 @@ namespace ClubedaLeitura.ConsoleApp
                 Console.WriteLine();
 
                 do {
-                    Console.Write("Digite o id da revista a ser emprestada: ");
+                    Console.Write("Digite o ID da revista a ser emprestada: ");
                     emprestimo.nRevista = Convert.ToInt32(Console.ReadLine());
                     Console.WriteLine();
                 }while(revistas[emprestimo.nRevista].disponivel == false);
@@ -135,9 +139,17 @@ namespace ClubedaLeitura.ConsoleApp
 
                 Console.Write("Digite a data de devolução: ");
                 emprestimo.dataDevolucao = Console.ReadLine();
+
+                Console.WriteLine();
+            }
+            static void comprovarAcao(string mensagem, ConsoleColor cor)
+            {
+                Console.ForegroundColor = cor;
+                Console.WriteLine(mensagem);
+                Console.ResetColor();
             }
 
-        string resposta;
+            string resposta;
         bool chamarMenu;
         char continuar;
         string excluirOuEditar;
@@ -179,46 +191,42 @@ namespace ClubedaLeitura.ConsoleApp
                     #region Caixa
                         lerCaixa(ref caixa);
                         caixa.guardarCaixaemVetor(caixas, caixa);
-                        Console.WriteLine();
-
-                        #endregion
-                 
+                        comprovarAcao("Caixa adicionada! ", ConsoleColor.Green);
+                        Console.WriteLine();                                
                    break;
+                    #endregion
 
-                case "2":
+                    case "2":
                      #region Revista
                         lerRevista(ref revista, caixas);
                         revista.AdicionarRevistaAoVetor(revistas, revista);
-                        Console.WriteLine();
-                        #endregion
-
+                        comprovarAcao("Revista adicionada! ", ConsoleColor.Green);
+                        Console.WriteLine();                  
                         break;
+                    #endregion
 
-                case "3":
+                    case "3":
                     #region Cadastro do Amigo
 
                     cadastrarAmigos(ref amigo);
 
                     amigo.VetorDeAmigos(amigos, amigo);
-                    Console.WriteLine();
-
+                    comprovarAcao("Cadastro adicionado! ", ConsoleColor.Green);
+                    Console.WriteLine();                
+                    break;
                     #endregion
 
-                    break;
-
-                case "4":
+                    case "4":
                     #region Emprestimo
                     lerEmprestimo(ref emprestimo, revistas, amigos);
 
                     emprestimo.VetorDeEmprestimos(emprestimos, emprestimo);
-                    
-
-                    Console.WriteLine();
-
-                    #endregion
+                    comprovarAcao("Emprestimo Realizado! ", ConsoleColor.Green);
+                    Console.WriteLine();                  
                     break;
+                    #endregion
 
-                case "5":
+                    case "5":
                     revista.exibir(revistas, revista);
                     break;
 
@@ -242,8 +250,18 @@ namespace ClubedaLeitura.ConsoleApp
                         excluirOuEditar = Console.ReadLine();
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-                
-                    if (excluirOuEditar == "E")
+
+                        Console.WriteLine("Opções de ID de revista: ");
+                        for (int i = 0; i < revistas.Length; i++)
+                        {
+                            if (revistas[i] != null)
+                            {
+                                Console.WriteLine(i + " - " + revistas[i].nomeRevista);
+                            }
+                        }
+
+                        Console.WriteLine();
+                        if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição da revista que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
@@ -253,6 +271,7 @@ namespace ClubedaLeitura.ConsoleApp
                         lerRevista(ref revista, caixas);
 
                         revista.editarRevista(revistas, revista, editar);
+                        comprovarAcao("Revista editada! ", ConsoleColor.Blue);
                         Console.WriteLine();
                     }
                     else
@@ -263,6 +282,7 @@ namespace ClubedaLeitura.ConsoleApp
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             revista.excluirRevista(revistas, revista, excluir);
+                            comprovarAcao("Revista excluida! ", ConsoleColor.Red);
                             Console.WriteLine();
                         }
                     }
@@ -277,8 +297,18 @@ namespace ClubedaLeitura.ConsoleApp
                         excluirOuEditar = Console.ReadLine();
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
-           
-                    if (excluirOuEditar == "E")
+
+                    Console.WriteLine("Opções de caixa: ");
+                    for (int i = 0; i < caixas.Length; i++)
+                    {
+                        if (caixas[i] != null)
+                        {
+                            Console.WriteLine(i);
+                        }
+                    }
+                    Console.WriteLine();
+
+                        if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição da caixa que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
@@ -288,6 +318,7 @@ namespace ClubedaLeitura.ConsoleApp
                         lerCaixa(ref caixa);
 
                         caixa.editarCaixa(caixas, caixa, editar);
+                        comprovarAcao("Caixa editada! ", ConsoleColor.Blue);
 
                         Console.WriteLine();
                     }
@@ -299,6 +330,7 @@ namespace ClubedaLeitura.ConsoleApp
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             caixa.excluirCaixa(caixas, caixa, excluir);
+                            comprovarAcao("Caixa excluida! ", ConsoleColor.Red);
                             Console.WriteLine();
                         }
                     }
@@ -314,7 +346,19 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
 
-                    if (excluirOuEditar == "E")
+                    Console.WriteLine("Opções de Id de amigo: ");
+
+                    for (int i = 0; i < amigos.Length; i++)
+                    {
+                        if (amigos[i] != null)
+                        {
+                            Console.WriteLine(i + " - " + amigos[i].nomeDoAmigo);
+                        }
+                    }
+
+                        Console.WriteLine();
+
+                        if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição do cadastro do amigo que deseja editar: ");
                         editar = Convert.ToInt32(Console.ReadLine());
@@ -324,6 +368,7 @@ namespace ClubedaLeitura.ConsoleApp
                         cadastrarAmigos(ref amigo);
 
                         amigo.editarCadastro(amigos, amigo, editar);
+                        comprovarAcao("Cadastro editado! ", ConsoleColor.Blue);
                         Console.WriteLine();
                     }
                     else
@@ -334,6 +379,7 @@ namespace ClubedaLeitura.ConsoleApp
                             excluir = Convert.ToInt32(Console.ReadLine());
 
                             amigo.excluirCadastro(amigos, amigo, excluir);
+                            comprovarAcao("Amigo excluido! ", ConsoleColor.Red);
                             Console.WriteLine();
                         }
                     }
@@ -349,6 +395,17 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
                     } while (excluirOuEditar != "E" && excluirOuEditar != "EX");
 
+                    Console.WriteLine("Opções de emprestimo: ");
+
+                        for(int i = 0; i < emprestimos.Length; i++)
+                        {
+                            if(emprestimos[i] != null)
+                            {
+                                Console.WriteLine(i);
+                            }
+                        }
+
+                        Console.WriteLine();
                     if (excluirOuEditar == "E")
                     {
                         Console.Write("Digite a posição do emprestimo que deseja editar: ");
@@ -360,6 +417,7 @@ namespace ClubedaLeitura.ConsoleApp
                         Console.WriteLine();
 
                         emprestimo.editarEmprestimo(emprestimos, emprestimo, editar);
+                        comprovarAcao("Emprestimo editado! ", ConsoleColor.Blue);
                         Console.WriteLine();
 
                     }
@@ -372,6 +430,7 @@ namespace ClubedaLeitura.ConsoleApp
 
                             Revista.disponibilizarRevista(emprestimo.nRevista, revistas);
                             emprestimo.excluirEmprestimo(emprestimos, emprestimo, excluir);
+                            comprovarAcao("Emprestimo excluido! ", ConsoleColor.Red);
                             Console.WriteLine();
                         }
                     }
